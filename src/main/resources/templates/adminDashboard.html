@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard | Event Management</title>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <h2>Welcome, <span th:text="${session.username}"></span></h2>
+        </header>
+
+        <section class="cards">
+            <div class="card">
+                <h3>Total Events</h3>
+                <p>12</p>
+            </div>
+
+            <div class="card">
+                <h3>Upcoming Events</h3>
+                <p>5</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Clients</h3>
+                <p>8</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Revenue</h3>
+                <p>₹ 2,50,000</p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

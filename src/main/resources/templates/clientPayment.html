@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Payment</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="form-card">
+
+            <h2>Client Payment</h2>
+
+            <!-- ===============================
+                 SUCCESS / ERROR MESSAGES
+            ================================ -->
+            <div th:if="${successMessage}" class="success-msg">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <div th:if="${errorMessage}" class="error-msg">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- ===============================
+                 CLIENT + EVENT SELECTION
+            ================================ -->
+            <form th:action="@{/client-payments}" method="get">
+
+                <label>Client</label>
+                <select name="clientId" onchange="this.form.submit()" required>
+                    <option value="">-- Select Client --</option>
+                    <option th:each="c : ${clients}"
+                            th:value="${c.clientId}"
+                            th:text="${c.clientName}"
+                            th:selected="${selectedClientId == c.clientId}">
+                    </option>
+                </select>
+
+                <label>Event</label>
+                <select name="eventId"
+                        onchange="this.form.submit()"
+                        th:disabled="${events == null}"
+                        required>
+                    <option value="">-- Select Event --</option>
+                    <option th:each="e : ${events}"
+                            th:value="${e.eventId}"
+                            th:text="${e.eventName}"
+                            th:selected="${selectedEventId == e.eventId}">
+                    </option>
+                </select>
+
+            </form>
+
+            <!-- ===============================
+                 PAYMENT SUMMARY
+            ================================ -->
+            <div th:if="${event != null}" style="margin-top: 25px;">
+
+                <table class="crud-table">
+                    <tbody>
+                        <tr>
+                            <th>Package Amount</th>
+                            <td th:text="${event.packageAmount}"></td>
+                        </tr>
+                        <tr>
+                            <th>Paid So Far</th>
+                            <td th:text="${paidSoFar}"></td>
+                        </tr>
+                        <tr>
+                            <th>Balance Due</th>
+                            <td th:text="${balanceDue}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- ===============================
+                 ADD PAYMENT FORM
+            ================================ -->
+            <div th:if="${event != null}" style="margin-top: 30px;">
+
+                <form th:action="@{/client-payments/save}"
+                      th:object="${payment}"
+                      method="post">
+
+                    <!-- Hidden IDs -->
+                    <input type="hidden" name="clientId" th:value="${selectedClientId}">
+                    <input type="hidden" name="eventId" th:value="${selectedEventId}">
+
+                    <label>Paid Amount</label>
+                    <input type="number"
+                           th:field="*{paidAmount}"
+                           step="0.01"
+                           min="1"
+                           th:disabled="${balanceDue <= 0}"
+                           required>
+
+                    <label>Payment Stage</label>
+                    <select th:field="*{paymentStage}" required>
+                        <option value="">-- Select Stage --</option>
+                        <option value="ADVANCE">Advance</option>
+                        <option value="MID">Mid</option>
+                        <option value="FINAL">Final</option>
+                    </select>
+
+                    <label>Payment Mode</label>
+                    <select th:field="*{paymentMode}" required>
+                        <option value="">-- Select Mode --</option>
+                        <option value="CASH">Cash</option>
+                        <option value="UPI">UPI</option>
+                        <option value="BANK">Bank</option>
+                    </select>
+
+                    <label>Payment Date</label>
+                    <input type="date" th:field="*{paymentDate}">
+
+                    <button type="submit"
+                            class="primary-btn"
+                            th:disabled="${balanceDue <= 0}">
+                        Save Client Payment
+                    </button>
+
+                    <a th:href="@{/client-payments/history(clientId=${selectedClientId},eventId=${selectedEventId})}"
+                       class="secondary-link">
+                        View Payment History
+                    </a>
+
+                </form>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Auto-hide messages -->
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll(
+                '.success-msg, .error-msg'
+            ).forEach(el => el.style.display = 'none');
+        }, 3000);
+    </script>
+
+</body>
+</html>

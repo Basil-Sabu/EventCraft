@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Client Dashboard | Event Management</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/clientSidebar :: clientSidebar}"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <header class="topbar">
+            <h2>
+                Welcome,
+                <span th:text="${session.username}"></span>
+            </h2>
+        </header>
+
+       
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<aside class="sidebar" th:fragment="clientSidebar">
+
+    <h2 class="logo">EventCraft</h2>
+
+    <nav class="sidebar-menu">
+
+        <!-- DASHBOARD -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/client/dashboard}" class="single-link">
+                    DASHBOARD
+                </a>
+            </p>
+        </div>
+
+        <!-- MY EVENTS -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/client/events}" class="single-link">
+                    MY EVENTS
+                </a>
+            </p>
+        </div>
+
+        <!-- EVENT SCHEDULE -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/client/schedule}" class="single-link">
+                    EVENT SCHEDULE
+                </a>
+            </p>
+        </div>
+
+        <!-- GUEST SUMMARY -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/client/guests}" class="single-link">
+                    GUEST SUMMARY
+                </a>
+            </p>
+        </div>
+
+        <!-- ASSIGNED VENDORS -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/client/vendors}" class="single-link">
+                    ASSIGNED VENDORS
+                </a>
+            </p>
+        </div>
+
+        <!-- PAYMENTS -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/client/payments}" class="single-link">
+                    PAYMENTS
+                </a>
+            </p>
+        </div>
+
+        <!-- LOGOUT -->
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/logout}" class="single-link logout-link">
+                    LOGOUT
+                </a>
+            </p>
+        </div>
+
+    </nav>
+</aside>
+
+</body>
+</html>

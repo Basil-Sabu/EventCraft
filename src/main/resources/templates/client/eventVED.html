@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Events</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Client Sidebar -->
+    <div th:replace="~{fragments/clientSidebar :: clientSidebar}"></div>
+
+    <main class="main-content">
+
+        <div class="table-card">
+
+            <!-- HEADER -->
+            <div class="table-header">
+                <a th:href="@{/client/dashboard}" class="table-btn back-btn">
+                    ← Back
+                </a>
+
+                <h2>My Events</h2>
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-scroll">
+                <table class="crud-table">
+
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Date</th>
+                            <th>Venue</th>
+                            <th>Package Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="e : ${events}">
+                            <td th:text="${e.eventName}"></td>
+                            <td th:text="${e.eventDate}"></td>
+                            <td th:text="${e.venue}"></td>
+                            <td th:text="${e.packageAmount}"></td>
+
+                            <td>
+                                <a th:href="@{/client/event/details(eventId=${e.eventId})}"
+                                   class="table-btn edit">
+                                   View
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(events)}">
+                            <td colspan="5" class="no-data">
+                                No events found
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

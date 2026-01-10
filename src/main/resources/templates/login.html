@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login | Event Management</title>
+    <meta charset="UTF-8">
+
+    <!-- Global App CSS -->
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="login-page">
+
+    <div class="login">
+
+        <h2>Event Management Login</h2>
+
+        <!-- Error message -->
+        <p class="error" th:text="${error}"></p>
+
+        <!-- Login Form -->
+        <form th:action="@{/login}" th:object="${user}" method="post">
+
+            <label for="username">Username</label>
+            <input type="text"
+                   id="username"
+                   th:field="*{username}"
+                   placeholder="Enter username"
+                   required />
+
+            <label for="password">Password</label>
+            <input type="password"
+                   id="password"
+                   th:field="*{password}"
+                   placeholder="Enter password"
+                   required />
+
+            <button type="submit">Login</button>
+        </form>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Guest Management</title>
+<link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+	<!-- Sidebar -->
+	<div th:replace="fragments/sidebar :: sidebar"></div>
+
+	<!-- Main Content -->
+	<main class="main-content">
+
+		<div class="form-card">
+
+			<h2>Guest Management</h2>
+
+			<!-- ===============================
+                 SUCCESS / ERROR MESSAGES
+            ================================ -->
+			<div th:if="${successMessage}" class="success-msg">
+				<span th:text="${successMessage}"></span>
+			</div>
+
+			<div th:if="${errorMessage}" class="error-msg">
+				<span th:text="${errorMessage}"></span>
+			</div>
+
+			<!-- ===============================
+                 CLIENT + EVENT SELECTION
+            ================================ -->
+			<form th:action="@{/guest-management}" method="get">
+
+				<label>Client</label> <select name="clientId"
+					onchange="this.form.submit()" required>
+					<option value="">-- Select Client --</option>
+					<option th:each="c : ${clients}" th:value="${c.clientId}"
+						th:text="${c.clientName}"
+						th:selected="${selectedClientId == c.clientId}"></option>
+				</select> <label>Event</label> <select name="eventId"
+					onchange="this.form.submit()" th:disabled="${events == null}"
+					required>
+					<option value="">-- Select Event --</option>
+					<option th:each="e : ${events}" th:value="${e.eventId}"
+						th:text="${e.eventName}"
+						th:selected="${selectedEventId == e.eventId}"></option>
+				</select>
+
+			</form>
+
+			<!-- ===============================
+                 EXISTING GUEST GROUPS TABLE
+            ================================ -->
+			<div th:if="${guests != null}" style="margin-top: 30px;">
+
+				<h3 style="margin-bottom: 12px; color: var(--primary);">
+					Existing Guest Groups</h3>
+
+				<table class="crud-table">
+					<thead>
+						<tr>
+							<th>Group Name</th>
+							<th>Guest Count</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="g : ${guests}">
+							<td th:text="${g.groupName}"></td>
+							<td th:text="${g.guestCount}"></td>
+							<td><a
+								th:href="@{/guest-management/edit(guestId=${g.groupId})}"
+								class="table-btn edit">Edit</a> <a
+								th:href="@{/guest-management/delete(guestId=${g.groupId})}"
+								class="table-btn delete"
+								onclick="return confirm('Are you sure?')"> Delete </a></td>
+						</tr>
+
+						<!-- EMPTY STATE -->
+						<tr th:if="${#lists.isEmpty(guests)}">
+							<td colspan="3" class="no-data">No guest groups added yet</td>
+						</tr>
+					</tbody>
+
+					<!-- ✅ TOTAL ROW -->
+					<tfoot th:if="${totalGuestCount != null}">
+						<tr style="font-weight: 700; background: #F6F4FF;">
+							<td>Total Expected Guests</td>
+							<td th:text="${totalGuestCount}"></td>
+							<td></td>
+						</tr>
+					</tfoot>
+				</table>
+
+			</div>
+
+			<!-- ===============================
+                 ADD / EDIT GUEST GROUP FORM
+            ================================ -->
+			<div th:if="${selectedEventId != null}" style="margin-top: 35px;">
+
+				<h3 style="margin-bottom: 12px; color: var(--primary);">
+					<span
+						th:text="${guest.groupId == null ? 'Add Guest Group' : 'Edit Guest Group'}"></span>
+				</h3>
+
+				<form th:action="@{/guest-management/save}" th:object="${guest}"
+					method="post">
+
+					<input type="hidden" th:field="*{groupId}"> <input
+						type="hidden" name="eventId" th:value="${selectedEventId}">
+
+					<label>Group Name</label> <input type="text"
+						th:field="*{groupName}" required> <label>Guest
+						Count</label> <input type="number" th:field="*{guestCount}" min="1"
+						required>
+
+					<button type="submit" class="primary-btn">Save Group</button>
+
+				</form>
+			</div>
+
+		</div>
+
+	</main>
+
+	<!-- Auto-hide messages -->
+	<script>
+        setTimeout(() => {
+            document.querySelectorAll(
+                '.success-msg, .error-msg'
+            ).forEach(el => el.style.display = 'none');
+        }, 3000);
+    </script>
+
+</body>
+</html>

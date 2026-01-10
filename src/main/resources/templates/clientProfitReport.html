@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Profit Report</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar -->
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="table-card">
+
+            <h2>Reports – Client Profit Summary</h2>
+
+            <!-- ===============================
+                 PROFIT SUMMARY TABLE
+            ================================ -->
+            <table class="crud-table">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Total Package</th>
+                        <th>Total Vendor Expense</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="r : ${reportList}">
+                        <td th:text="${r.clientName}"></td>
+                        <td th:text="${r.totalPackage}"></td>
+                        <td th:text="${r.totalExpense}"></td>
+                        <td th:text="${r.profit}"></td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(reportList)}">
+                        <td colspan="4" class="no-data">
+                            No data available
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

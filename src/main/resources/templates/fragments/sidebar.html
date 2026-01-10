@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<aside class="sidebar" th:fragment="sidebar">
+
+    <h2 class="logo">EventCraft</h2>
+
+    <nav class="sidebar-menu">
+
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/admin/dashboard}" class="single-link">DASHBOARD</a>
+            </p>
+        </div>
+
+        <div class="menu-section dropdown">
+            <p class="menu-title">
+                <a href="javascript:void(0)">CLIENTS</a>
+            </p>
+            <ul class="submenu">
+                <li><a th:href="@{/client}">Client Management</a></li>
+                <li><a th:href="@{/client-payments}">Client Payments</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section dropdown">
+            <p class="menu-title">
+                <a href="javascript:void(0)">EVENTS</a>
+            </p>
+            <ul class="submenu">
+                <li><a th:href="@{/events/add}">Event Management</a></li>
+                <li><a th:href="@{/guest-management}">Guest Management</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section dropdown">
+            <p class="menu-title">
+                <a href="javascript:void(0)">VENDORS</a>
+            </p>
+            <ul class="submenu">
+            	 <li><a th:href="@{/vendors/add}">Vendor Details</a></li>
+                <li><a th:href="@{/vendor-assignment/add}">Vendor Assignment</a></li>
+                <li><a th:href="@{/vendor-expense}">Vendor Expenses</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/reports/client-profit}" class="single-link">REPORTS</a>
+            </p>
+        </div>
+
+        <div class="menu-section">
+            <p class="menu-title">
+                <a th:href="@{/logout}" class="single-link logout-link">LOGOUT</a>
+            </p>
+        </div>
+
+    </nav>
+</aside>
+
+</body>
+</html>

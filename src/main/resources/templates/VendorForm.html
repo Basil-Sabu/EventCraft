@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="form-card">
+
+            <h2 th:text="${vendor.vendorId == null ? 'Add Vendor' : 'Edit Vendor'}"></h2>
+
+            <!-- ===============================
+                 SUCCESS / ERROR MESSAGES
+            ================================ -->
+            <div th:if="${successMessage}" class="success-msg">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <div th:if="${errorMessage}" class="error-msg">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- ===============================
+                 VENDOR FORM
+            ================================ -->
+            <form th:action="@{/vendors/save}"
+                  th:object="${vendor}"
+                  method="post">
+
+                <!-- Hidden ID (for Edit) -->
+                <input type="hidden" th:field="*{vendorId}">
+
+                <label>Vendor Type</label>
+                <input type="text"
+                       th:field="*{vendorType}"
+                       required>
+
+                <label>Vendor Name</label>
+                <input type="text"
+                       th:field="*{vendorName}"
+                       required>
+
+                <label>Contact Number</label>
+                <input type="text"
+                       th:field="*{contact}">
+
+                <button type="submit" class="primary-btn">
+                    Save Vendor
+                </button>
+
+                <a th:href="@{/vendors/list}" class="secondary-link">
+                    View Vendors
+                </a>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- Auto-hide messages -->
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll(
+                '.success-msg, .error-msg'
+            ).forEach(el => el.style.display = 'none');
+        }, 3000);
+    </script>
+
+</body>
+</html>

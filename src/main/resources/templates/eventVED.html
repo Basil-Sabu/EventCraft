@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event List</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="crud-page">
+
+    <div class="table-card">
+
+        <!-- HEADER -->
+        <div class="table-header">
+
+            <a th:href="@{/events/add}" class="table-btn back-btn">
+                ← Back
+            </a>
+
+            <h2>Event List</h2>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-scroll">
+            <table class="crud-table">
+
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Event Name</th>
+                        <th>Date</th>
+                        <th>Venue</th>
+                        <th>Package Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="e : ${events}">
+                        <td th:text="${e.client.clientName}"></td>
+                        <td th:text="${e.eventName}"></td>
+                        <td th:text="${e.eventDate}"></td>
+                        <td th:text="${e.venue}"></td>
+                        <td th:text="${e.packageAmount}"></td>
+
+                        <td>
+                            <a th:href="@{/events/edit(eventId=${e.eventId})}"
+                               class="table-btn edit">
+                               Edit
+                            </a>
+
+                            <a th:href="@{/events/delete(eventId=${e.eventId})}"
+                               class="table-btn delete"
+                               onclick="return confirm('Are you sure?')">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(events)}">
+                        <td colspan="6" class="no-data">
+                            No events found
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

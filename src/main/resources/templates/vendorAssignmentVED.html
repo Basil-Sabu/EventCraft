@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assigned Vendors</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="crud-page">
+
+<div class="table-card">
+
+    <h2>Assigned Vendors</h2>
+
+    <!-- CONTEXT (READ-ONLY) -->
+    <p th:if="${event != null}">
+        <b>Client:</b>
+        <span th:text="${event.client.clientName}"></span>
+    </p>
+
+    <p th:if="${event != null}">
+        <b>Event:</b>
+        <span th:text="${event.eventName}"></span>
+    </p>
+
+    <!-- TABLE -->
+    <div class="table-scroll">
+        <table class="crud-table">
+
+            <thead>
+                <tr>
+                    <th>Vendor Type</th>
+                    <th>Vendor Name</th>
+                    <th>Agreed Cost</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="a : ${assignments}">
+                    <td th:text="${a.vendor.vendorType}"></td>
+                    <td th:text="${a.vendor.vendorName}"></td>
+                    <td th:text="${a.agreedCost}"></td>
+
+                    <td>
+                        <!-- EDIT → SAME ADD PAGE -->
+                        <a th:href="@{/vendor-assignment/add(assignmentId=${a.assignmentId})}"
+                           class="table-btn edit">
+                            Edit
+                        </a>
+
+                        <!-- DELETE -->
+                        <a th:href="@{/vendor-assignment/delete(
+                                    assignmentId=${a.assignmentId},
+                                    eventId=${event.eventId})}"
+                           class="table-btn delete"
+                           onclick="return confirm('Are you sure you want to delete this vendor assignment?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- EMPTY STATE -->
+                <tr th:if="${#lists.isEmpty(assignments)}">
+                    <td colspan="4" class="no-data">
+                        No vendors assigned for this event
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <!-- BACK -->
+    <a href="javascript:history.back()"
+       class="secondary-link"
+       style="margin-top:20px;">
+        ← Back
+    </a>
+
+</div>
+
+</body>
+</html>

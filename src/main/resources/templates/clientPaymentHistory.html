@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Client Payment History</title>
+<link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+	<!-- Sidebar -->
+	<div th:replace="fragments/sidebar :: sidebar"></div>
+
+	<!-- Main Content -->
+	<main class="main-content">
+
+		<div class="table-card">
+
+			<h2>Client Payment History</h2>
+
+			<!-- ===============================
+                 CLIENT + EVENT SELECTION
+            ================================ -->
+			<form th:action="@{/client-payments/history}" method="get"
+				style="max-width: 500px; margin: 0 auto 25px;">
+
+				<label>Client</label> <select name="clientId"
+					onchange="this.form.submit()" required>
+					<option value="">-- Select Client --</option>
+					<option th:each="c : ${clients}" th:value="${c.clientId}"
+						th:text="${c.clientName}"
+						th:selected="${selectedClientId == c.clientId}"></option>
+				</select> <label>Event</label> <select name="eventId"
+					onchange="this.form.submit()" th:disabled="${events == null}"
+					required>
+					<option value="">-- Select Event --</option>
+					<option th:each="e : ${events}" th:value="${e.eventId}"
+						th:text="${e.eventName}"
+						th:selected="${selectedEventId == e.eventId}"></option>
+				</select>
+
+			</form>
+
+
+			<!-- ===============================
+                 PAYMENT SUMMARY
+            ================================ -->
+			<div th:if="${event != null}" style="margin-bottom: 20px;">
+
+				<table class="crud-table">
+					<tbody>
+						<tr>
+							<th>Package Amount</th>
+							<td th:text="${event.packageAmount}"></td>
+						</tr>
+						<tr>
+							<th>Total Paid</th>
+							<td th:text="${paidSoFar}"></td>
+						</tr>
+						<tr>
+							<th>Balance Due</th>
+							<td th:text="${balanceDue}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<!-- ===============================
+                 PAYMENT HISTORY TABLE
+            ================================ -->
+			<div th:if="${payments != null}">
+
+				<table class="crud-table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Paid Amount</th>
+							<th>Stage</th>
+							<th>Mode</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="p : ${payments}">
+							<td th:text="${p.paymentDate}"></td>
+							<td th:text="${p.paidAmount}"></td>
+							<td th:text="${p.paymentStage}"></td>
+							<td th:text="${p.paymentMode}"></td>
+						</tr>
+
+						<tr th:if="${#lists.isEmpty(payments)}">
+							<td colspan="4" class="no-data">No payments recorded yet</td>
+						</tr>
+					</tbody>
+
+					<!-- TOTAL ROW -->
+					<tfoot>
+						<tr style="font-weight: 700; background: #F6F4FF;">
+							<td>Total</td>
+							<td th:text="${paidSoFar}"></td>
+							<td colspan="2"></td>
+						</tr>
+					</tfoot>
+				</table>
+
+			</div>
+
+			<!-- BACK LINK -->
+			<a
+				th:href="@{/client-payments(clientId=${selectedClientId},eventId=${selectedEventId})}"
+				class="secondary-link" style="margin-top: 20px;"> ← Back to
+				Payment Entry </a>
+
+		</div>
+
+	</main>
+
+</body>
+</html>

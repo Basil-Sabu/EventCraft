@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar (COMMON FOR ALL PAGES) -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="form-card">
+
+            <h2 th:text="${client.clientId == null ? 'Add Client' : 'Edit Client'}"></h2>
+
+            <!-- Messages -->
+            <div th:if="${successMessage}" class="success-msg">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <div th:if="${warningMessage}" class="warning-msg">
+                <span th:text="${warningMessage}"></span>
+            </div>
+
+            <div th:if="${errorMessage}" class="error-msg">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <form th:action="@{/saveClient}" th:object="${client}" method="post">
+
+                <input type="hidden" th:field="*{clientId}">
+
+                <label>Client Name</label>
+                <input type="text" th:field="*{clientName}" required>
+
+                <label>Phone Number</label>
+                <input type="text" th:field="*{phoneNumber}" required>
+
+                <label>Email</label>
+                <input type="email" th:field="*{email}" required>
+
+                <label>Address</label>
+                <textarea th:field="*{address}"></textarea>
+
+
+                <hr style="margin: 25px 0; border-top: 1px solid #ddd;">
+
+                <h3 style="color: var(--primary);">Login Credentials</h3>
+
+                <label>Username</label>
+                <input type="text"
+                       name="username"
+                       th:value="${username}"
+                       th:required="${client.clientId == null}">
+
+                <label>Password</label>
+                <input type="password"
+                       name="password"
+                       placeholder="Leave blank to keep existing password">
+
+                <button type="submit" class="primary-btn">
+                    Save Client
+                </button>
+
+                <a th:href="@{/clientTable}" class="secondary-link">
+                    View Clients
+                </a>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- Auto-hide messages -->
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll(
+                '.success-msg, .warning-msg, .error-msg'
+            ).forEach(el => el.style.display = 'none');
+        }, 3000);
+    </script>
+
+</body>
+</html>

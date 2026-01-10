@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Client List</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="crud-page">
+
+    <div class="table-card">
+
+        <!-- HEADER -->
+        <div class="table-header">
+           <a href="javascript:history.back()" class="table-btn back-btn">
+   				 ← Back
+		</a>
+
+
+            <h2>Client List</h2>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-scroll">
+            <table class="crud-table">
+
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="c : ${listClients}">
+                        <td th:text="${c.clientName}"></td>
+                        <td th:text="${c.phoneNumber}"></td>
+                        <td th:text="${c.email}"></td>
+                        <td th:text="${c.address}"></td>
+                        <td>
+                            <a th:href="@{/client/edit/{id}(id=${c.clientId})}"
+                               class="table-btn edit">Edit</a>
+                            <a th:href="@{/client/delete/{id}(id=${c.clientId})}"
+                               class="table-btn delete"
+                               onclick="return confirm('Are you sure?')">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(listClients)}">
+                        <td colspan="7" class="no-data">No clients found</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

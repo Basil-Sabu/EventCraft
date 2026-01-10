@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Event</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="form-card">
+
+            <h2 th:text="${event.eventId == null ? 'Add Event' : 'Edit Event'}"></h2>
+
+            <!-- Messages -->
+            <div th:if="${successMessage}" class="success-msg">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <div th:if="${warningMessage}" class="warning-msg">
+                <span th:text="${warningMessage}"></span>
+            </div>
+
+            <div th:if="${errorMessage}" class="error-msg">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <form th:action="@{/events/save}" th:object="${event}" method="post">
+
+                <!-- Hidden ID for Edit -->
+                <input type="hidden" th:field="*{eventId}">
+
+                <!-- CLIENT DROPDOWN -->
+                <label>Client</label>
+                <select name="clientId" required>
+                    <option value="">-- Select Client --</option>
+                    <option th:each="client : ${clients}"
+                            th:value="${client.clientId}"
+                            th:selected="${event.client != null && event.client.clientId == client.clientId}"
+                            th:text="${client.clientName}">
+                    </option>
+                </select>
+
+                <label>Event Name</label>
+                <input type="text" th:field="*{eventName}" required>
+
+                <label>Event Date</label>
+                <input type="date" th:field="*{eventDate}" required>
+
+                <label>Venue</label>
+                <input type="text" th:field="*{venue}" required>
+
+                <label>Package Amount</label>
+                <input type="number"
+                       th:field="*{packageAmount}"
+                       step="0.01"
+                       required>
+
+                <button type="submit" class="primary-btn">
+                    Save Event
+                </button>
+
+                <a th:href="@{/events/list}" class="secondary-link">
+                    View Events
+                </a>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- Auto-hide messages -->
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll(
+                '.success-msg, .warning-msg, .error-msg'
+            ).forEach(el => el.style.display = 'none');
+        }, 3000);
+    </script>
+
+</body>
+</html>

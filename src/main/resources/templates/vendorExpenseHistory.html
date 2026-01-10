@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Payment History</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Sidebar -->
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="table-card">
+
+            <h2>Vendor Payment History</h2>
+
+            <!-- ===============================
+                 CONTEXT DETAILS
+            ================================ -->
+            <table class="crud-table" style="margin-bottom:20px;">
+                <tbody>
+                    <tr>
+                        <th>Client</th>
+                        <td th:text="${assignment.event.client.clientName}"></td>
+                    </tr>
+                    <tr>
+                        <th>Event</th>
+                        <td th:text="${assignment.event.eventName}"></td>
+                    </tr>
+                    <tr>
+                        <th>Vendor</th>
+                        <td th:text="${assignment.vendor.vendorName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ===============================
+                 PAYMENT HISTORY TABLE
+            ================================ -->
+            <table class="crud-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Paid Amount</th>
+                        <th>Type</th>
+                        <th>Mode</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="p : ${history}">
+                        <td th:text="${p.paymentDate}"></td>
+                        <td th:text="${p.paidAmount}"></td>
+                        <td th:text="${p.paymentType}"></td>
+                        <td th:text="${p.paymentMode}"></td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(history)}">
+                        <td colspan="4" class="no-data">
+                            No payments recorded yet
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr style="font-weight:700; background:#F6F4FF;">
+                        <td>Total Paid</td>
+                        <td th:text="${totalPaid}"></td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- BACK -->
+            <a th:href="@{/vendor-expense}"
+               class="secondary-link"
+               style="margin-top:20px;">
+                ← Back to Vendor Expense
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
