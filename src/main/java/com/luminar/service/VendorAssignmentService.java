@@ -2,6 +2,7 @@ package com.luminar.service;
 
 import java.util.List;
 
+import com.luminar.entity.Vendor;
 import com.luminar.entity.VendorAssignment;
 
 public interface VendorAssignmentService {
@@ -13,4 +14,6 @@ public interface VendorAssignmentService {
     VendorAssignment getAssignmentById(Long assignmentId);
 
     void deleteAssignment(Long assignmentId);
+    
+    List<VendorAssignment> getVendorsByUserId(Long userId);
 }

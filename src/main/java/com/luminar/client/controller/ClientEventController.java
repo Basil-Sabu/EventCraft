@@ -41,31 +41,5 @@ public class ClientEventController {
         return "client/eventVED";
     }
 
-    // ===============================
-    // EVENT DETAILS (VIEW)
-    // ===============================
-    @GetMapping("/event/details")
-    public String viewEventDetails(
-            @RequestParam Long eventId,
-            HttpSession session,
-            Model model) {
-
-        Long loggedUserId =
-                (Long) session.getAttribute("userId");
-
-        if (loggedUserId == null) {
-            return "redirect:/";
-        }
-
-        Event event = eventService.getEventById(eventId);
-
-        // 🔐 OWNERSHIP CHECK
-        if (!event.getClient().getUserId().equals(loggedUserId)) {
-            return "redirect:/client/dashboard";
-        }
-
-        model.addAttribute("event", event);
-
-        return "client/eventDetails";
-    }
+    
 }

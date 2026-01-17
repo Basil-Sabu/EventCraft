@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.luminar.entity.ClientPayment;
+import com.luminar.entity.VendorAssignment;
 
 public interface ClientPaymentRepository extends JpaRepository<ClientPayment, Long> {
 
@@ -32,4 +33,6 @@ public interface ClientPaymentRepository extends JpaRepository<ClientPayment, Lo
             Long clientId,
             Long eventId
     );
+    
+    List<ClientPayment> findByClientUserId(Long userId);
 }

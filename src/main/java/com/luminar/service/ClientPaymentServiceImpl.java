@@ -101,4 +101,10 @@ public class ClientPaymentServiceImpl implements ClientPaymentService {
                     new RuntimeException("Payment not found")
                 );
     }
+
+	@Override
+	public List<ClientPayment> getPaymentsByUserId(Long userId) {
+		
+		return paymentRepository.findByClientUserId(userId);
+	}
 }

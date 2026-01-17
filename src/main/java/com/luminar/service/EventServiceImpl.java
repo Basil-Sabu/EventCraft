@@ -77,6 +77,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    // to fetch events based on client for other modules
     public List<Event> getEventsByClient(Long clientId) {
         return eventRepository.findByClientClientId(clientId);
     }

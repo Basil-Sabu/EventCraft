@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Guest Group List</title>
+<link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+	<!-- Sidebar -->
+	<div th:replace="fragments/sidebar :: sidebar"></div>
+
+	<main class="main-content">
+
+		<div class="table-card">
+
+			<!-- HEADER -->
+			<div class="table-header">
+				<h2>Guest Group List</h2>
+			</div>
+
+			<div th:if="${guests != null}" style="margin-top: 30px;">
+
+				<div class="table-scroll">
+					<table class="crud-table">
+
+						<thead>
+							<tr>
+								<th>Group Name</th>
+								<th>Guest Count</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="g : ${guests}">
+								<td th:text="${g.groupName}"></td>
+								<td th:text="${g.guestCount}"></td>
+								<td><a
+									th:href="@{/guest-management/edit(guestId=${g.groupId})}"
+									class="table-btn edit">Edit</a> <a
+									th:href="@{/guest-management/delete(guestId=${g.groupId})}"
+									class="table-btn delete"
+									onclick="return confirm('Are you sure?')"> Delete </a></td>
+							</tr>
+
+							<!-- EMPTY STATE -->
+							<tr th:if="${#lists.isEmpty(guests)}">
+								<td colspan="3" class="no-data">No guest groups added yet</td>
+							</tr>
+						</tbody>
+
+						<!-- TOTAL ROW -->
+						<tfoot th:if="${totalGuestCount != null}">
+							<tr style="font-weight: 700; background: #F6F4FF;">
+								<td>Total Expected Guests</td>
+								<td th:text="${totalGuestCount}"></td>
+								<td></td>
+							</tr>
+						</tfoot>
+
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+
+	</main>
+
+</body>
+</html>

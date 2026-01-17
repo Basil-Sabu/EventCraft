@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>My Guests</title>
+<link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <div th:replace="~{fragments/clientSidebar :: clientSidebar}"></div>
+
+   <main class="main-content">
+
+    <div class="table-card">
+
+        <!-- HEADER (same style as My Events) -->
+        <div class="table-header">
+            <h2>Guest Summary</h2>
+        </div>
+
+        <!-- EVENT SELECT -->
+        <form method="get"
+      th:action="@{/client/guests}"
+      style="max-width: 500px; margin: 0 auto 25px;">
+
+    <label>Select Event</label>
+
+    <select name="eventId"
+            onchange="this.form.submit()"
+            required
+            style="width: 100%; padding: 10px;">
+        <option value="">-- Select Event --</option>
+
+        <option th:each="e : ${events}"
+                th:value="${e.eventId}"
+                th:text="${e.eventName}"
+                th:selected="${selectedEventId == e.eventId}">
+        </option>
+    </select>
+
+</form>
+
+
+        <!-- TABLE (same scroll behavior) -->
+        <div class="table-scroll" th:if="${guests != null}">
+
+            <table class="crud-table">
+
+                <thead>
+                    <tr>
+                        <th>Group Name</th>
+                        <th>Guest Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="g : ${guests}">
+                        <td th:text="${g.groupName}"></td>
+                        <td th:text="${g.guestCount}"></td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(guests)}">
+                        <td colspan="2" class="no-data">
+                            No guest groups added
+                        </td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr style="font-weight:700; background:#F6F4FF;">
+                        <td>Total Expected Guests</td>
+                        <td th:text="${totalGuestCount}"></td>
+                    </tr>
+                </tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+</body>
+
+</html>

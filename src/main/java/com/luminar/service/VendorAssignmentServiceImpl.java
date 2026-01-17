@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.luminar.entity.Vendor;
 import com.luminar.entity.VendorAssignment;
 import com.luminar.repository.VendorAssignmentRepository;
 
@@ -90,4 +91,13 @@ public class VendorAssignmentServiceImpl
     public void deleteAssignment(Long assignmentId) {
         assignmentRepository.deleteById(assignmentId);
     }
+
+
+
+
+	@Override
+	public List<VendorAssignment> getVendorsByUserId(Long userId) {
+		return assignmentRepository.findByEventClientUserId(userId);
+		
+	}
 }

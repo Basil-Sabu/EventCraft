@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Vendors</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Client Sidebar -->
+    <div th:replace="~{fragments/clientSidebar :: clientSidebar}"></div>
+
+    <main class="main-content">
+
+        <div class="table-card">
+
+            <!-- HEADER -->
+            <div class="table-header">
+               
+
+                <h2>My Payments</h2>
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-scroll">
+        <div th:if="${payments != null}">
+
+				<table class="crud-table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Paid Amount</th>
+							<th>Stage</th>
+							<th>Mode</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="p : ${payments}">
+							<td th:text="${p.paymentDate}"></td>
+							<td th:text="${p.paidAmount}"></td>
+							<td th:text="${p.paymentStage}"></td>
+							<td th:text="${p.paymentMode}"></td>
+						</tr>
+
+						<tr th:if="${#lists.isEmpty(payments)}">
+							<td colspan="4" class="no-data">No payments recorded yet</td>
+						</tr>
+					</tbody>
+
+					<!-- TOTAL ROW -->
+				
+				</table>
+
+			</div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

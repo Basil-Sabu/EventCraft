@@ -20,5 +20,7 @@ public interface ClientPaymentService {
 
     // GET SINGLE PAYMENT (if ever needed)
     ClientPayment getPaymentById(Long paymentId);
+    
+    List<ClientPayment> getPaymentsByUserId(Long userId);
 }
 

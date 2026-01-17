@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Vendors</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- Client Sidebar -->
+    <div th:replace="~{fragments/clientSidebar :: clientSidebar}"></div>
+
+    <main class="main-content">
+
+        <div class="table-card">
+
+            <!-- HEADER -->
+            <div class="table-header">
+               
+
+                <h2>My Vendors</h2>
+            </div>
+
+            <!-- TABLE -->
+            <div class="table-scroll">
+        <table class="crud-table">
+
+            <thead>
+                <tr>
+                    <th>Vendor Type</th>
+                    <th>Vendor Name</th>
+                 
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="a : ${assignments}">
+                    <td th:text="${a.vendor.vendorType}"></td>
+                    <td th:text="${a.vendor.vendorName}"></td>
+                    
+    			</tr>
+
+     <!-- EMPTY STATE -->
+                <tr th:if="${#lists.isEmpty(assignments)}">
+                    <td colspan="4" class="no-data">
+                        No vendors assigned for this event
+                    </td>
+                </tr>
+</tbody>
+
+
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

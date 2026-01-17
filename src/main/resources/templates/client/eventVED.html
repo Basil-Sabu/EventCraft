@@ -17,9 +17,7 @@
 
             <!-- HEADER -->
             <div class="table-header">
-                <a th:href="@{/client/dashboard}" class="table-btn back-btn">
-                    ← Back
-                </a>
+               
 
                 <h2>My Events</h2>
             </div>
@@ -29,36 +27,29 @@
                 <table class="crud-table">
 
                     <thead>
-                        <tr>
-                            <th>Event Name</th>
-                            <th>Date</th>
-                            <th>Venue</th>
-                            <th>Package Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+    <tr>
+        <th>Event Name</th>
+        <th>Date</th>
+        <th>Venue</th>
+        <th>Package Amount</th>
+    </tr>
+</thead>
 
-                    <tbody>
-                        <tr th:each="e : ${events}">
-                            <td th:text="${e.eventName}"></td>
-                            <td th:text="${e.eventDate}"></td>
-                            <td th:text="${e.venue}"></td>
-                            <td th:text="${e.packageAmount}"></td>
+<tbody>
+    <tr th:each="e : ${events}">
+        <td th:text="${e.eventName}"></td>
+        <td th:text="${e.eventDate}"></td>
+        <td th:text="${e.venue}"></td>
+        <td th:text="${e.packageAmount}"></td>
+    </tr>
 
-                            <td>
-                                <a th:href="@{/client/event/details(eventId=${e.eventId})}"
-                                   class="table-btn edit">
-                                   View
-                                </a>
-                            </td>
-                        </tr>
+    <tr th:if="${#lists.isEmpty(events)}">
+        <td colspan="4" class="no-data">
+            No events found
+        </td>
+    </tr>
+</tbody>
 
-                        <tr th:if="${#lists.isEmpty(events)}">
-                            <td colspan="5" class="no-data">
-                                No events found
-                            </td>
-                        </tr>
-                    </tbody>
 
                 </table>
             </div>

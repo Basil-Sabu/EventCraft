@@ -6,18 +6,17 @@
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
-<body class="crud-page">
+<body class="dashboard-page">
 
-    <div class="table-card">
+    <!-- Client Sidebar -->
+     <div th:replace="fragments/sidebar :: sidebar"></div>
 
+    <main class="main-content">
+
+        <div class="table-card">
         <!-- HEADER -->
         <div class="table-header">
-            <a href="javascript:history.back()"
-               class="table-btn back-btn">
-                ← Back
-            </a>
-
-            <h2>Vendor List</h2>
+           <h2>Vendor List</h2>
         </div>
 
         <!-- TABLE -->
@@ -64,6 +63,7 @@
         </div>
 
     </div>
+    </main>
 
 </body>
 </html>
