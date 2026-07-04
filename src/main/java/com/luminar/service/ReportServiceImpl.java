@@ -13,45 +13,34 @@ import com.luminar.repository.ReportRepository;
 @Service
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    private ReportRepository reportRepository;
+	@Autowired
+	private ReportRepository reportRepository;
 
-    @Override
-    public List<ClientProfitReportDTO> getClientProfitReport() {
+	@Override
+	public List<ClientProfitReportDTO> getClientProfitReport() {
 
-        List<Object[]> rows =
-            reportRepository.fetchClientProfitData();
+		List<Object[]> rows = reportRepository.fetchClientProfitData();
 
-        List<ClientProfitReportDTO> reportList =
-            new ArrayList<>();
+		List<ClientProfitReportDTO> reportList = new ArrayList<>();
 
-        for (Object[] row : rows) {
+		for (Object[] row : rows) {
 
-            String clientName =
-                (String) row[0];
+			String clientName = (String) row[0];
 
-            BigDecimal totalPackage =
-                (BigDecimal) row[1];
+			BigDecimal totalPackage = (BigDecimal) row[1];
 
-            BigDecimal totalExpense =
-                (BigDecimal) row[2];
+			BigDecimal totalExpense = (BigDecimal) row[2];
 
-            // Safety: handle nulls
-            if (totalPackage == null)
-                totalPackage = BigDecimal.ZERO;
+			// Safety: handle nulls
+			if (totalPackage == null)
+				totalPackage = BigDecimal.ZERO;
 
-            if (totalExpense == null)
-                totalExpense = BigDecimal.ZERO;
+			if (totalExpense == null)
+				totalExpense = BigDecimal.ZERO;
 
-            reportList.add(
-                new ClientProfitReportDTO(
-                    clientName,
-                    totalPackage,
-                    totalExpense
-                )
-            );
-        }
+			reportList.add(new ClientProfitReportDTO(clientName, totalPackage, totalExpense));
+		}
 
-        return reportList;
-    }
+		return reportList;
+	}
 }

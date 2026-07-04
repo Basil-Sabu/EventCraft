@@ -23,23 +23,19 @@ public class EventController {
     @Autowired
     private ClientService clientService;
 
-    // ===============================
-    // ADD EVENT
-    // ===============================
+    
     @GetMapping("/events/add")
     public String showAddEventForm(Model model) {
 
         model.addAttribute("event", new Event());
 
         model.addAttribute("clients",
-                clientService.getAllClients()); // you can later filter ACTIVE
+                clientService.getAllClients()); 
 
         return "eventAdd";
     }
 
-    // ===============================
-    // SAVE EVENT
-    // ===============================
+    
     @PostMapping("/events/save")
     public String saveEvent(
             @ModelAttribute Event event,
@@ -76,9 +72,7 @@ public class EventController {
 
 
 
-    // ===============================
-    // EVENT LIST
-    // ===============================
+   
     @GetMapping("/events/list")
     public String listEvents(Model model) {
 
@@ -87,9 +81,7 @@ public class EventController {
         return "eventVED";
     }
 
-    // ===============================
-    // EDIT EVENT
-    // ===============================
+    
     @GetMapping("/events/edit")
     public String editEvent(
             @RequestParam Long eventId,
