@@ -81,7 +81,7 @@ public class ClientController {
 	@GetMapping("/clientTable")	
     public String viewClientTage(Model model) {
         model.addAttribute("listClients", clientService.getAllClients());
-        return "ClientVED";
+        return "clientVED";
     }
 	
 	@GetMapping("/client/edit/{id}")
